@@ -1,19 +1,24 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import WeatherCard from "./WeatherCard";
 
 const Main = () => {
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
+
   const handleChange = (e) => {
     setSearchText(e.target.value);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     getWeatherDataFromApi();
     setSearchText("");
+    e.target.input.focus();
+    // e.target.reset();
   };
+
   const getWeatherDataFromApi = async () => {
     let apiKey = process.env.REACT_APP_API_KEY;
     let units = "metric";
@@ -26,6 +31,7 @@ const Main = () => {
       const iconUrl = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
 
       const isExist = data.some((card) => card.id === id);
+
       if (isExist) {
         setError(
           `You already know the weather for ${name}, Please search for another city 😉`
@@ -44,7 +50,8 @@ const Main = () => {
       }, 5000);
     }
   };
-  console.log(data);
+  //   console.log(data);
+
   return (
     <section className="main">
       <form onSubmit={handleSubmit}>
@@ -60,7 +67,7 @@ const Main = () => {
       </form>
       <div className="container">
         <ul className="cities">
-          {data?.map((item) => (
+          {data.map((item) => (
             <WeatherCard key={item.id} data={item} />
           ))}
         </ul>
