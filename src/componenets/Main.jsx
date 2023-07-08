@@ -52,7 +52,9 @@ const [data, setData] = useState([]);
         <span className="msg"></span>
       </form>
        <div className="container">
-         <ul className="cities"><WeatherCard {...data} /></ul>
+         <ul className="cities">
+          <WeatherCard data={data} />
+          </ul>
        </div>
      </section>
 
