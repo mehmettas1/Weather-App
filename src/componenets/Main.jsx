@@ -1,10 +1,12 @@
 
 import axios from 'axios';
 import React, { useState } from 'react'
+import WeatherCard from './WeatherCard';
 
 const Main = () => {
   
-const [searchText, setSearchText] = useState("")
+const [searchText, setSearchText] = useState("");
+const [data, setData] = useState([]);
   const handleChange=(e)=>{
     setSearchText(e.target.value)
    
@@ -25,14 +27,16 @@ const [searchText, setSearchText] = useState("")
 
         try {
           const response = await axios.get(url)
-          const { name, main, sys, weather } = response.data;
+          const { name, main, sys, weather,id } = response.data;
           console.log(response.data);
-          // let iconUrl = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
-        } catch  {
-          
+          let iconUrl = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+          setData({ name, main, sys, weather,iconUrl,id})
+        } catch (err) {
+          console.log(err);
         }
 
   }
+  console.log(data);
   return (
 
      <section className="main">
@@ -48,9 +52,7 @@ const [searchText, setSearchText] = useState("")
         <span className="msg"></span>
       </form>
        <div className="container">
-         <ul className="cities">
-          mainnss
-         </ul>
+         <ul className="cities"><WeatherCard {...data} /></ul>
        </div>
      </section>
 
