@@ -1,97 +1,63 @@
-
-import axios from 'axios';
-import React, { useState } from 'react'
-import WeatherCard from './WeatherCard';
+import axios from "axios";
+import React, { useState } from "react";
+import WeatherCard from "./WeatherCard";
 
 const Main = () => {
-  
-const [searchText, setSearchText] = useState("");
-const [data, setData] = useState([]);
-  const handleChange=(e)=>{
-    setSearchText(e.target.value)
-   
+  const [searchText, setSearchText] = useState("");
+  const [data, setData] = useState([]);
+  const handleChange = (e) => {
+    setSearchText(e.target.value);
   };
 
-  const handleSubmit=(e)=>{
-  e.preventDefault();
-  getWeatherDataFromApi();
-  // e.target.reset()
-  setSearchText("");
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getWeatherDataFromApi();
+    // e.target.reset()
+    setSearchText("");
+  };
 
-  const getWeatherDataFromApi = async() => {
-        let apiKey = process.env.REACT_APP_API_KEY;
-        let units = "metric";
-        let lang = "tr";
-        let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchText}&appid=${apiKey}&units=${units}&lang=${lang}`;
+  const getWeatherDataFromApi = async () => {
+    let apiKey = process.env.REACT_APP_API_KEY;
+    let units = "metric";
+    let lang = "tr";
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchText}&appid=${apiKey}&units=${units}&lang=${lang}`;
 
-        try {
-          const response = await axios.get(url)
-          const { name, main, sys, weather,id } = response.data;
-          console.log(response.data);
-          let iconUrl = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
-          setData({ name, main, sys, weather,iconUrl,id})
-        } catch (err) {
-          console.log(err);
-        }
-
-  }
+    try {
+      const response = await axios.get(url);
+      const { name, main, sys, weather, id } = response.data;
+      console.log(response.data);
+      let iconUrl = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+      setData([...data, { name, main, sys, weather, iconUrl, id }]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   console.log(data);
   return (
-
-     <section className="main">
-       <form onSubmit={handleSubmit}>
-         <input
+    <section className="main">
+      <form onSubmit={handleSubmit}>
+        <input
           onChange={handleChange}
           type="text"
           placeholder="Search for a city"
-        value={searchText}
+          value={searchText}
           autoFocus
         />
         <button type="submit">SUBMIT</button>
         <span className="msg"></span>
       </form>
-       <div className="container">
-         <ul className="cities">
-          <WeatherCard data={data} />
-          </ul>
-       </div>
-     </section>
+      <div className="container">
+        <ul className="cities">
+          {data.map((item) => (
+            <WeatherCard key={data.id} data={item} />
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};
 
-  )
-}
-
-export default Main
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default Main;
 
 // import axios from "axios";
 // import { useState } from "react";
@@ -149,7 +115,7 @@ export default Main
 
 //   return (
 //     <section className="main">
-//      
+//
 //       <div className="container">
 //         <ul className="cities">
 //           {data.map((item) => (

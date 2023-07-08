@@ -19,8 +19,8 @@
 
 // export default WeatherCard
 
-const WeatherCard = (props) => {
-  const { name, main, sys, iconUrl, weather } = props;
+const WeatherCard = ({data}) => {
+  const { name, main, sys, iconUrl, weather } = data;
   return (
     <li className="city">
       <h2 className="city-name">
