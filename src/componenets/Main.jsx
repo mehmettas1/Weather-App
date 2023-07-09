@@ -5,6 +5,7 @@ import WeatherCard from "./WeatherCard";
 const Main = () => {
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState([]);
+  const [error, setError] = useState("");
   const handleChange = (e) => {
     setSearchText(e.target.value);
   };
@@ -27,9 +28,20 @@ const Main = () => {
       const { name, main, sys, weather, id } = response.data;
       console.log(response.data);
       let iconUrl = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
-      setData([...data, { name, main, sys, weather, iconUrl, id }]);
-    } catch (err) {
-      console.log(err);
+      const isExist = data.some((card) => card.id === id);
+
+             if (isExist) {
+               setError(
+                 `You already know the weather for ${name}, Please search for another city 😉`
+               );
+               setTimeout(() => {
+                 setError("");
+               }, 5000);
+             } else {
+               setData([{ main, name, sys, weather, iconUrl, id }, ...data]);
+             }
+    } catch (error) {
+      console.log(error);
     }
   };
   console.log(data);
