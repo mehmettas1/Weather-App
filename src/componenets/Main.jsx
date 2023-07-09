@@ -40,8 +40,8 @@ const Main = () => {
              } else {
                setData([{ main, name, sys, weather, iconUrl, id }, ...data]);
              }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
   console.log(data);
