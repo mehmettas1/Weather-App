@@ -26,7 +26,7 @@ const Main = () => {
     try {
       const response = await axios.get(url);
       const { name, main, sys, weather, id } = response.data;
-      console.log(response.data);
+   
       let iconUrl = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
       const isExist = data.some((card) => card.id === id);
 
@@ -42,6 +42,10 @@ const Main = () => {
              }
     } catch (err) {
       console.log(err);
+             setError(err.message);
+             setTimeout(() => {
+               setError("");
+             }, 5000);
     }
   };
   console.log(data);
