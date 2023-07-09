@@ -18,7 +18,7 @@ const Main = () => {
   };
 
   const getWeatherDataFromApi = async () => {
-    let apiKey = process.env.REACT_APP_API_KEY;
+    let apiKey = "00484987152255e2d06f78d9149a1649";
     let units = "metric";
     let lang = "tr";
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchText}&appid=${apiKey}&units=${units}&lang=${lang}`;
@@ -38,7 +38,7 @@ const Main = () => {
                  setError("");
                }, 5000);
              } else {
-               setData([{ main, name, sys, weather, iconUrl, id }, ...data]);
+               setData([{ name, main, sys, weather, id, iconUrl }, ...data]);
              }
     } catch (err) {
       console.log(err);
