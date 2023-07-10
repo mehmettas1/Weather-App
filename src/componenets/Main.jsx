@@ -65,7 +65,8 @@ const Main = () => {
       <div className="container">
         <ul className="cities">
           {data.map((item) => (
-            <WeatherCard key={data.id} data={item} />
+            <WeatherCard key={item.id} data={item} />
+
           ))}
         </ul>
       </div>
