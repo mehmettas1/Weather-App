@@ -6,16 +6,18 @@ const Main = () => {
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
-  const handleChange = (e) => {
-    setSearchText(e.target.value);
-  };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     getWeatherDataFromApi();
     // e.target.reset()
     setSearchText("");
+    e.target.input.focus();
   };
+  const handleChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
 
   const getWeatherDataFromApi = async () => {
     let apiKey = "00484987152255e2d06f78d9149a1649";
@@ -48,7 +50,7 @@ const Main = () => {
              }, 5000);
     }
   };
-  console.log(data);
+
   return (
     <section className="main">
       <form onSubmit={handleSubmit}>
@@ -60,7 +62,7 @@ const Main = () => {
           autoFocus
         />
         <button type="submit">SUBMIT</button>
-        <span className="msg"></span>
+        <span className="msg">{error}</span>
       </form>
       <div className="container">
         <ul className="cities">
